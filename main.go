@@ -1,10 +1,12 @@
 package main
 
+import "strings"
+
 // Node represents an HTML element
 type Node struct {
 	tag      string
 	id       string
-	class    string
+	classes  string
 	text     string
 	src      string
 	alt      string
@@ -29,6 +31,28 @@ func findByID(root *Node, id string) *Node {
 	return nil
 }
 
+func findByIDDFS(node *Node, id string) *Node {
+	if node.id == id {
+		return node
+	}
+	if len(node.children) > 0 {
+		for _, child := range node.children {
+			findByIDDFS(child, id)
+		}
+	}
+	return nil
+}
+
+func (n *Node) hasClass(className string) bool {
+	classes := strings.Fields(n.classes)
+	for _, class := range classes {
+		if class == className {
+			return true
+		}
+	}
+	return false
+}
+
 func main() {
 	image := Node{
 		tag: "img",
@@ -50,7 +74,7 @@ func main() {
 
 	div := Node{
 		tag:      "div",
-		class:    "footer",
+		classes:  "footer footer-red pxzciq",
 		text:     "This is a footer",
 		children: []*Node{&span},
 	}
