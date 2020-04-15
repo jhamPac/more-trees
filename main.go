@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 // Node represents an HTML element
 type Node struct {
@@ -94,4 +97,5 @@ func main() {
 		children: []*Node{&body},
 	}
 
+	fmt.Println(html)
 }
