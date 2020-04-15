@@ -1,5 +1,6 @@
 package main
 
+// Node represents an HTML element
 type Node struct {
 	tag      string
 	id       string
@@ -8,6 +9,24 @@ type Node struct {
 	src      string
 	alt      string
 	children []*Node
+}
+
+func findByID(root *Node, id string) *Node {
+	queue := make([]*Node, 0)
+	queue = append(queue, root)
+	for len(queue) > 0 {
+		nextUp := queue[0]
+		queue = queue[1:]
+		if nextUp.id == id {
+			return nextUp
+		}
+		if len(nextUp.children) > 0 {
+			for _, child := range nextUp.children {
+				queue = append(queue, child)
+			}
+		}
+	}
+	return nil
 }
 
 func main() {
